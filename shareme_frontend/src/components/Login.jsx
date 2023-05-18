@@ -12,11 +12,8 @@ import logo from '../assets/logowhite.png'
 export default function Login() {
     const navigate = useNavigate();
     const responseGoogle = (response) => {
-        console.log(response);
         var decodedHeader = jwt_decode(response.credential);
-        console.log(decodedHeader);
-
-        localStorage.setItem("user", decodedHeader);
+        localStorage.setItem("user", JSON.stringify(decodedHeader));
         const { name, sub, picture } = decodedHeader;
         const doc = {
             _id: sub,
@@ -24,8 +21,6 @@ export default function Login() {
             userName: name,
             image: picture
         }
-        console.log(doc);
-
         client.createIfNotExists(doc)
             .then(() => {
                 navigate('/', { replace: true })
