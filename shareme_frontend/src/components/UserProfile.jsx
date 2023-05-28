@@ -64,15 +64,15 @@ const UserProfile = () => {
                         />
                         <img
                             className="rounded-full w-20 h-20 -mt-10 shadow-xl object-cover"
-                            src={user.image}
+                            src={user?.image}
                             alt="user-pic"
                         />
                     </div>
                     <h1 className="font-bold text-3xl text-center mt-3">
-                        {user.userName}
+                        {user?.userName}
                     </h1>
                     <div className="absolute top-0 z-10 right-0 p-2">
-                        {userId === User.sub && (
+                        {userId === User?.sub && (
                             <button
                                 type="button"
                                 className=" bg-white p-2 rounded-full cursor-pointer outline-none shadow-md"
