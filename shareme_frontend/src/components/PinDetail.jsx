@@ -10,13 +10,13 @@ import Spinner from './Spinner';
 
 const PinDetail = ({ user }) => {
     const { pinId } = useParams();
-    console.log(pinId);
 
     const [pins, setPins] = useState();
     const [pinDetail, setPinDetail] = useState();
     const [comment, setComment] = useState('');
     const [addingComment, setAddingComment] = useState(false);
 
+    console.log(pinDetail);
     const fetchPinDetails = () => {
         const query = pinDetailQuery(pinId);
 
@@ -45,7 +45,7 @@ const PinDetail = ({ user }) => {
             client
                 .patch(pinId)
                 .setIfMissing({ comments: [] })
-                .insert('after', 'comments[-1]', [{ comment, _key: uuidv4(), postedBy: { _type: 'postedBy', _ref: user._id } }])
+                .insert('after', 'comments[-1]', [{ comment, _key: uuidv4(), postedBy: { _type: 'postedBy', _ref: user?._id } }])
                 .commit()
                 .then(() => {
                     fetchPinDetails();
@@ -93,7 +93,7 @@ const PinDetail = ({ user }) => {
                             </h1>
                             <p className="mt-3">{pinDetail.about}</p>
                         </div>
-                        <Link to={`/user-profile/${pinDetail?.postedBy._id}`} className="flex gap-2 mt-5 items-center bg-white rounded-lg ">
+                        <Link to={`/user-profile/${pinDetail?.postedBy?._id}`} className="flex gap-2 mt-5 items-center bg-white rounded-lg ">
                             <img src={pinDetail?.postedBy.image} className="w-10 h-10 rounded-full" alt="user-profile" />
                             <p className="font-bold">{pinDetail?.postedBy.userName}</p>
                         </Link>
@@ -114,7 +114,7 @@ const PinDetail = ({ user }) => {
                             ))}
                         </div>
                         <div className="flex flex-wrap mt-6 gap-3">
-                            <Link to={`/user-profile/${user._id}`}>
+                            <Link to={`/user-profile/${user?._id}`}>
                                 <img src={user.image} className="w-10 h-10 rounded-full cursor-pointer" alt="user-profile" />
                             </Link>
                             <input
